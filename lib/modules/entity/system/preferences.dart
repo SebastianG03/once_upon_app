@@ -5,4 +5,13 @@ class Preferences {
   Notifications notifications = Notifications();
 
   Preferences();
+
+  Preferences.fromJson(Map<String, dynamic> json)
+      : theme = json['theme'],
+        notifications = Notifications.fromJson(json['notifications']);
+
+  Map<String, dynamic> toJson() => {
+    'theme': theme,
+    'notifications': notifications.toJson()
+  };
 }
