@@ -1,13 +1,14 @@
-import 'dart:js_interop';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:once_upon_app/modules/entity/application/application_models.dart';
+import 'package:once_upon_app/utility/encryption.dart';
 
 class Service {
   //Collection reference
   final CollectionReference _usersCollection = FirebaseFirestore.instance.collection('users');
   final CollectionReference _talesCollection = FirebaseFirestore.instance.collection('tales');
+  final Encryption _encrypt = Encryption();
 
   Future createUser(UserModel user) async {
     try {
@@ -16,6 +17,8 @@ class Service {
           .get();
 
       if(snapshot.docs.isNotEmpty) throw Exception('User with the same email already exists');
+
+      user.password = _encrypt.encryptAES(user.password!);
 
       return await _usersCollection.doc(user.id).set(user.toJson());
 
@@ -42,8 +45,11 @@ class Service {
     }
   }
 
-  Future<UserModel?> getUsers(String email, String password) async {
+  Future<UserModel?> getUser(String email, String password) async {
     try {
+
+      password = _encrypt.encryptAES(password);
+
       var snapshot = await _usersCollection
           .where('email', isEqualTo: email)
           .where('password', isEqualTo: password)

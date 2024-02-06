@@ -1,5 +1,3 @@
-import 'package:once_upon_app/modules/entity/application/tale.dart';
-
 class TaleDetails {
   final List<double> rates;
   final List<String> reactions;

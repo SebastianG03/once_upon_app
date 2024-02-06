@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:once_upon_app/modules/view/widgets/screen_components/home/app_bar.dart';
+import 'package:once_upon_app/modules/view/widgets/components/home/app_bar.dart';
 
 import '../../widgets/shared/shared.dart';
 
@@ -23,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: widget.navigationShell,
       ),
+      resizeToAvoidBottomInset: false,
       floatingActionButton: const NavbarFloatingActionButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomNavBar(activeIndex: 0, navigationShell: widget.navigationShell), //TODO arreglar posicion

@@ -40,7 +40,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             ]
         );
       },
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.blueAccent.shade400,
       splashColor: Colors.transparent,
       gapLocation: GapLocation.center,
 
@@ -55,7 +55,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
     setState(() {
       widget.activeIndex = index;
       if (kDebugMode) {
-        print("Active index: ${widget.activeIndex} | Index Selected: ${index}");
+        print("Active index: ${widget.activeIndex} | Index Selected: $index");
       }
     });
 

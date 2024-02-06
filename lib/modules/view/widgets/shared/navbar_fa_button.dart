@@ -13,7 +13,7 @@ class NavbarFloatingActionButton extends StatelessWidget {
         }
       },
       shape: const CircleBorder(eccentricity: 1),
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.blueAccent.shade400,
       splashColor: Colors.transparent,
       child: const Icon(
         Icons.add,
