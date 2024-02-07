@@ -45,6 +45,9 @@ dependencies:
   encrypt: ^5.0.3
   flutter_dotenv: ^5.1.0
   line_icons: ^2.0.3
+  shared_preferences: ^2.2.2
+  riverpod: ^2.5.0
+  flutter_riverpod: ^2.4.10
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +59,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  riverpod_generator: ^2.3.11
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

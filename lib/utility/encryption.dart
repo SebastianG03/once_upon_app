@@ -1,30 +1,32 @@
-import 'dart:typed_data';
 
 import 'package:encrypt/encrypt.dart' as encrypt;
-import 'dart:convert';
+import 'package:flutter/foundation.dart';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class Encryption {
-  static late encrypt.IV iv;
-  final String encryptionKey = dotenv.env['ENCRYPTION_KEY']!;
+  static late encrypt.IV _iv;
+  final String _encryptionKey = dotenv.env['ENCRYPTION_KEY']!;
+  late encrypt.Key _key;
   static late encrypt.Encrypter encrypter;
 
   Encryption() {
-    iv = encrypt.IV.fromUtf8(encryptionKey);
-    encrypter = encrypt.Encrypter(encrypt.AES(encrypt.Key.fromUtf8(encryptionKey), mode: encrypt.AESMode.ctr, padding: null));
+    _key = encrypt.Key.fromUtf8(_encryptionKey);
+    _iv = encrypt.IV.fromLength(16);
+    encrypter = encrypt.Encrypter(encrypt.AES(_key));
   }
 
-  String encryptAES(String text) => encrypter.encrypt(text, iv: iv).base64;
+
+
+  String encryptAES(String text) {
+    var encrypted = encrypter.encrypt(text, iv: _iv).base64;
+    if (kDebugMode) print(encrypted);
+    return encrypted;
+  }
 
   String decryptAES(String encrypted) {
-    final Uint8List encryptedBytesWithSalt = base64.decode(encrypted);
-    final Uint8List encryptedBytes = encryptedBytesWithSalt.sublist(
-      0,
-      encryptedBytesWithSalt.length,
-    );
-    final String decrypted =
-    encrypter.decrypt64(base64.encode(encryptedBytes), iv: iv);
+    var decrypted = encrypter.decrypt(encrypt.Encrypted.fromBase64(encrypted), iv: _iv);
+    if (kDebugMode) print(decrypted);
     return decrypted;
   }
 }

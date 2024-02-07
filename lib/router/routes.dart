@@ -16,8 +16,9 @@ class AppRoutes {
   static const String _userRoute = '/user';
 
   //Routes names
-  static const String principalView = 'home';
-  static const String userView = 'user';
+  //This routes are the views of the menu screen.
+  static const String principalView = 'home/:id';
+  static const String userView = 'user/:id';
 
   //User Sub Routes paths
   static const String _signInRoute = 'sign_in';
@@ -83,7 +84,7 @@ class AppRoutes {
                       /*GoRoute(
                         path: 'configuration',
                         name: userConfigurationView,
-                        builder: (context, state) => UserConfigurationView(key: state.pageKey),
+                         builder: (context, state) => UserConfigurationView(key: state.pageKey),
                         routes: [],
                       ),
                       GoRoute(

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:once_upon_app/router/routes.dart';
 import 'package:once_upon_app/utility/app_theme.dart';
 
@@ -19,7 +20,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const MyApp());
+  runApp(
+      const ProviderScope(
+          child: MyApp()
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {

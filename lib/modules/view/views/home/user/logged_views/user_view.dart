@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:once_upon_app/modules/view/widgets/components/home/user_card.dart';
 
 class UserSignInView extends StatelessWidget {
-  const UserSignInView({super.key});
+  final String userId;
+  const UserSignInView({super.key, required this.userId});
 
   @override
   Widget build(BuildContext context) {

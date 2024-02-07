@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:once_upon_app/modules/view/views/home/user/sign_in_views/user_view.dart';
-import 'package:once_upon_app/modules/view/views/home/user/sign_out_views/user_view.dart';
+import 'package:once_upon_app/modules/interactor/configuration/preferences.dart';
+
+import 'guest_views/user_view.dart';
+import 'logged_views/user_view.dart';
 
 
 class UserView extends StatelessWidget {
-  const UserView({super.key});
+  UserView({super.key});
+
+  late String _userId = "";
 
   @override
   Widget build(BuildContext context) {
-    return const UserSignOutView();
+    getUserId();
+    return (_userId != "")
+        ? const UserSignOutView()
+        : UserSignInView(userId: _userId,);
+  }
+
+  Future getUserId() async {
+    _userId = await Preferences().getUserId();
   }
 }
