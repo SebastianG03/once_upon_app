@@ -1,4 +1,4 @@
-enum EmailError { empty, invalid }
+enum _EmailError { empty, invalid }
 
 class EmailValidator {
   String? _errorMessage = '';
@@ -8,24 +8,24 @@ class EmailValidator {
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   void validate({String value = ''}) {
-    EmailError? error = _validator(value);
+    _EmailError? error = _validator(value);
 
     if (error != null) {
-      if (error == EmailError.empty) _errorMessage = 'El campo es requerido';
-      if (error == EmailError.invalid) _errorMessage = 'El correo no es válido';
+      if (error == _EmailError.empty) _errorMessage = 'El campo es requerido';
+      if (error == _EmailError.invalid) _errorMessage = 'El correo no es válido';
     } else {
       _errorMessage = null;
     }
   }
 
-  EmailError? _validator(String value) {
+  _EmailError? _validator(String value) {
     if (value.isEmpty || value.trim().isEmpty) {
       _isValid = false;
-      return EmailError.empty;
+      return _EmailError.empty;
     }
     if (!emailRegex.hasMatch(value)) {
       _isValid = false;
-      return EmailError.invalid;
+      return _EmailError.invalid;
     }
     _isValid = true;
     return null;

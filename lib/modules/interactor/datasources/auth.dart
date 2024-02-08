@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:once_upon_app/modules/entity/application/application_models.dart';
-import 'package:once_upon_app/modules/interactor/data/service.dart';
+import 'package:once_upon_app/modules/interactor/datasources/user_datasource.dart';
 
 class Auth {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final Service _service = Service();
+  final UserDatasource _service = UserDatasource();
 
   //Sign in methods
   Future<UserModel?> signInAnonymously() async {
@@ -32,19 +32,23 @@ class Auth {
     }
   }
 
-  //Register and sign out methods
-
-  Future createUser(UserModel user) async {
-    await _service.createUser(user);
+  Future<UserModel?> signInWithEmailAndPassword(String email, String password) async {
+    try {
+      UserModel? user = await _service.getUser(email, password);
+      return user;
+    } catch (e) {
+      if (kDebugMode) print("Error signing in with email and password: $e");
+      return UserModel.guest(id: "");
+    }
   }
 
-
-  Future signOut() async {
+  Future<bool> signOut() async {
     try {
-      return await _auth.signOut();
+      await _auth.signOut();
+      return true;
     } catch (e) {
       if (kDebugMode) print("Error signing out: $e");
-      return null;
+      return false;
     }
   }
 }
