@@ -8,18 +8,18 @@ class Auth {
   final UserDatasource _service = UserDatasource();
 
   //Sign in methods
-  Future<UserModel?> signInAnonymously() async {
+  Future<UserModel> signInAnonymously() async {
     try {
       UserCredential result = await _auth.signInAnonymously();
-      UserModel? user = UserModel.guest(id: result.user!.uid);
+      UserModel user = UserModel.guest(id: result.user!.uid);
       return user;
     } catch (e) {
       if (kDebugMode) print("Error signing in anonymously: $e");
-      return null;
+      rethrow;
     }
   }
 
-  Future<UserModel?> googleSignIn() async {
+  Future<UserModel> googleSignIn() async {
     try {
       AuthProvider provider = GoogleAuthProvider();
       UserCredential result = await _auth.signInWithProvider(provider);
@@ -28,17 +28,17 @@ class Auth {
       return user;
     } catch (e) {
       if (kDebugMode) print("Error signing in with Google: $e");
-      return null;
+      rethrow;
     }
   }
 
-  Future<UserModel?> signInWithEmailAndPassword(String email, String password) async {
+  Future<UserModel> signInWithEmailAndPassword(String email, String password) async {
     try {
-      UserModel? user = await _service.getUser(email, password);
+      UserModel user = await _service.getUser(email, password);
       return user;
     } catch (e) {
       if (kDebugMode) print("Error signing in with email and password: $e");
-      return UserModel.guest(id: "");
+      rethrow;
     }
   }
 

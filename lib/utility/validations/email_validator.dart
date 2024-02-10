@@ -31,6 +31,6 @@ class EmailValidator {
     return null;
   }
 
-  String? get erroMessage => _errorMessage;
+  String? get errorMessage => _errorMessage;
   bool get isValid => _isValid;
 }

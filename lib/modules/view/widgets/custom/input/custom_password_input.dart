@@ -44,6 +44,7 @@ class _PasswordFormsModelState extends State<PasswordFormsModel> {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           labelText: widget.label,
+          errorMaxLines: 2,
           icon: const Icon(LineIcons.lock),
           suffix: GestureDetector(
             onTap: widget.tap,

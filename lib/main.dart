@@ -7,6 +7,7 @@ import 'package:once_upon_app/router/routes.dart';
 import 'package:once_upon_app/utility/app_theme.dart';
 
 import 'firebase_options.dart';
+import 'modules/presenter/provider/home/app_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,15 +28,17 @@ void main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    final routes = ref.watch(appRouterProvider);
+
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'OnceUponApp',
-      routerConfig: AppRoutes.router,
+      routerConfig: routes,
       theme: AppTheme.lightTheme,
     );
   }

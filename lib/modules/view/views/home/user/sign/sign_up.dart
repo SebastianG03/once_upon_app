@@ -1,55 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:once_upon_app/modules/view/widgets/components/home/user_register_form.dart';
+import 'package:once_upon_app/modules/view/widgets/custom/input/inputs.dart';
 
-class SignUpView extends ConsumerWidget {
+import '../../../../../presenter/provider/providers.dart';
+
+class SignUpView extends ConsumerStatefulWidget {
   const SignUpView({super.key});
 
+  _SignUpViewState createState() => _SignUpViewState();
+}
+
+class _SignUpViewState extends ConsumerState<SignUpView> {
+
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-      child: Form(
+  Widget build(BuildContext context) {
+
+    Map<String, dynamic> data = {
+      "username": "",
+      "email": "",
+      "password": "",
+    };
+
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+    String username = "";
+    String email = "";
+    String password = "";
+    String confirmPassword = "";
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context).size.height - 50,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+        child: Form(
+          key: formKey,
           child: Column(
             children: <Widget>[
-              TextFormField(
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                  labelText: "Username",
-                  icon: Icon(LineIcons.user),
-                ),
-              ),
-              const SizedBox(height: 15,),
-              TextFormField(
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                    labelText: "Email",
-                    icon: Icon(LineIcons.at)
-                ),
-              ),
-              const SizedBox(height: 15,),
-              TextFormField(
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: const InputDecoration(
-                    labelText: "Password",
-                    icon: Icon(LineIcons.lock)
-                ),
-              ),
-              const SizedBox(height: 15,),
-              TextFormField(
-                obscureText: true,
-                keyboardType: TextInputType.visiblePassword,
-                decoration: const InputDecoration(
-                    labelText: "Confirm Password",
-                    icon: Icon(LineIcons.lock)
-                ),
+              UserRegisterForm(
+                username: username,
+                email: email,
+                password: password,
+                confirmPassword: confirmPassword,
+                data: data,
               ),
               const SizedBox(height: 20,),
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.9,
                 child: ElevatedButton(
-                  onPressed: (){ print("Sign Up");},
+                  onPressed: (){
+                    if(formKey.currentState!.validate()) {
+                      ref.read(generateUserProvider(data));
+                    }
+                  },
                   child: const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 10.0),
                     child: Text(
@@ -62,10 +68,13 @@ class SignUpView extends ConsumerWidget {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
-          )
+          ),
+        ),
       ),
     );
   }
 }
+
+

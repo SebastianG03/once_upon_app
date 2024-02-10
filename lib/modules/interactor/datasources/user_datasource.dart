@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:once_upon_app/modules/entity/application/user.dart';
-import 'package:once_upon_app/utility/encryption.dart';
+import 'package:once_upon_app/modules/interactor/configuration/encryption.dart';
 
 class UserDatasource {
   final CollectionReference _usersCollection = FirebaseFirestore.instance.collection('users');
@@ -26,7 +26,7 @@ class UserDatasource {
     return false;
   }
 
-  Future<UserModel?> getById(String id) async {
+  Future<UserModel> getById(String id) async {
     try {
       var snapshot = await _usersCollection
           .where('id', isEqualTo: id)
@@ -35,11 +35,11 @@ class UserDatasource {
       return UserModel.fromJson(snapshot.docs.first.data() as Map<String, dynamic>);
     } catch(e) {
       if (kDebugMode) print("Error getting user: $e");
-      return null;
+      rethrow;
     }
   }
 
-  Future<UserModel?> getUser(String email, String password) async {
+  Future<UserModel> getUser(String email, String password) async {
     try {
       password = _encrypt.encryptAES(password);
 
@@ -55,15 +55,25 @@ class UserDatasource {
 
     } catch (e) {
       if (kDebugMode) print("Error getting user: $e");
-      return null;
+      rethrow;
     }
   }
 
-  Future<List<String>?> getUsernames() async {
+  Stream<String> getUsernamesStream() {
+    try{
+      return _usersCollection.snapshots().map((event) {
+        return event.docs.map((e) => UserModel.fromJson(e.data() as Map<String, dynamic>).username!).join(',');
+      });
+    } catch (e) {
+      if (kDebugMode) print("Error getting usernames: $e");
+      rethrow;
+    }
+  }
+
+  Future<List<String>> getUsernames() async {
     try {
       var snapshot = await _usersCollection.get();
-      if(snapshot.docs.isNotEmpty) return snapshot.docs.map((e) => UserModel.fromJson(e.data() as Map<String, dynamic>).username!).toList();
-      return null;
+      return snapshot.docs.map((e) => UserModel.fromJson(e.data() as Map<String, dynamic>).username!).toList();
     } catch (e) {
       if (kDebugMode) print("Error getting usernames: $e");
       rethrow;

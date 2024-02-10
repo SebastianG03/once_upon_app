@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:once_upon_app/modules/view/widgets/components/home/user_card.dart';
 
-class UserSignInView extends StatelessWidget {
+import '../../../../../entity/application/user.dart';
+import '../../../../../presenter/provider/providers.dart';
+
+class UserSignInView extends ConsumerWidget {
   final String userId;
   const UserSignInView({super.key, required this.userId});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, ref) {
+    UserModel? user;
+    final userProvider = ref.watch(userByIdProvider(userId));
+    setUserModel(user!, userProvider);
+
     List<String> signInItems = ['Your tales', 'Configuration and Privacy', 'Sign Out'];
     List<IconData> signInIcons = [Icons.book, Icons.settings, Icons.exit_to_app];
     return Padding(
@@ -17,7 +25,7 @@ class UserSignInView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const UserCard(),
+            UserCard(user: user,),
             const SizedBox(height: 30,),
             ListView.builder(
               itemCount: signInItems.length,
@@ -34,6 +42,11 @@ class UserSignInView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> setUserModel(UserModel user, Future<UserModel> userProvider, ) async {
+    final resut = await userProvider;
+    user = (resut == null)? UserModel.guest() : resut;
   }
 
 }

@@ -12,10 +12,10 @@ class UsernameValidator {
     if (error != null) {
       if (error == _UsernameError.empty) _errorMessage = 'El campo es requerido';
       if (error == _UsernameError.invalid) {
-        _errorMessage = 'El nombre es inválido, debe tener letras y/o números';
+        _errorMessage = 'Debe tener letras y/o números';
       }
       if (error == _UsernameError.length) {
-        _errorMessage = 'El nombre debe tener entre 6 y 20 caracteres';
+        _errorMessage = 'Debe tener entre 6 y 20 caracteres';
       }
     } else {
       _errorMessage = null;
@@ -39,6 +39,6 @@ class UsernameValidator {
     return null;
   }
 
-  String? get erroMessage => _errorMessage;
+  String? get errorMessage => _errorMessage;
   bool get isValid => _isValid;
 }

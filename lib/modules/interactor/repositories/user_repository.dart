@@ -15,22 +15,22 @@ class UserRepository extends UserRepositoryModel {
   }
 
   @override
-  Future<UserModel?> getById(String id) {
+  Future<UserModel> getById(String id) {
     return userDatasource.getById(id);
   }
 
   @override
-  Future<UserModel?> googleSignIn() {
+  Future<UserModel> googleSignIn() {
     return _auth.googleSignIn();
   }
 
   @override
-  Future<UserModel?> signInAnonymously() {
+  Future<UserModel> signInAnonymously() {
     return _auth.signInAnonymously();
   }
 
   @override
-  Future<UserModel?> signInWithEmailAndPassword(String email, String password) {
+  Future<UserModel> signInWithEmailAndPassword(String email, String password) {
     return _auth.signInWithEmailAndPassword(email, password);
   }
 
@@ -45,7 +45,7 @@ class UserRepository extends UserRepositoryModel {
   }
 
   @override
-  Future<List<String>?> getUsernames() {
+  Future<List<String>> getUsernames() {
     return userDatasource.getUsernames();
   }
 

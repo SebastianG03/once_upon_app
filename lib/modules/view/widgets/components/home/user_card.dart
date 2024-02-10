@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../entity/application/user.dart';
+
 class UserCard extends StatelessWidget {
-  const UserCard({super.key});
+  final UserModel user;
+  const UserCard({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -11,25 +14,25 @@ class UserCard extends StatelessWidget {
       ),
       elevation: 0.5,
       margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8.0),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(vertical: 20.0 , horizontal: 15.0),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 20.0 , horizontal: 15.0),
         child: Row(
           children: [
-            Column(
+             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 CircleAvatar(
                   radius: 25,
                   backgroundColor: Colors.greenAccent,
-                  child: Text('G',),
+                  child: Text(user.username![0],),
                 ),
               ],
             ),
-            SizedBox(width: 15,),
-            Text('Gustavo', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
-            Spacer(),
-            _UserColumns(title: 'Tales Read', content: '10'),
+            const SizedBox(width: 15,),
+            Text('${user.username}', style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w400),),
+            const Spacer(),
+            const _UserColumns(title: 'Tales Posted', content: '0'),
           ],
         ),
       ),

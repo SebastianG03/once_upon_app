@@ -12,11 +12,22 @@ class PasswordValidator {
 
     if (error != null) {
       if (error == _PasswordError.empty) _errorMessage = 'El campo es requerido';
-      if (error == _PasswordError.length) _errorMessage = 'La contraseña debe tener entre 8 y 20 caracteres';
-      if (error == _PasswordError.format) _errorMessage = 'La contraseña debe tener al menos una mayúscula, un número y un caracter especial';
+      if (error == _PasswordError.length) _errorMessage = 'Longitud entre 8 y 20 caracteres';
+      if (error == _PasswordError.format) _errorMessage = 'Debe tener una mayúscula, un número y un caracter especial';
     } else {
       _errorMessage = null;
     }
+  }
+
+  bool equals(String password, String confirmPassword){
+    if(password != confirmPassword){
+      _isValid = false;
+      _errorMessage = 'Las contraseñas no coinciden';
+      return false;
+    }
+    _isValid = true;
+    _errorMessage = null;
+    return true;
   }
 
   _PasswordError? _validator(String value) {

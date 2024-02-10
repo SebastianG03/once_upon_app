@@ -29,6 +29,7 @@ class TextFormsModel extends StatelessWidget {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         decoration: InputDecoration(
           labelText: labelText,
+          errorMaxLines: 2,
           icon: Icon(icon),
         ),
         style: _textStyle(),

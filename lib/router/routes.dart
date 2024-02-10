@@ -36,7 +36,7 @@ class AppRoutes {
   static final GlobalKey<NavigatorState> _rootKey = GlobalKey<NavigatorState>();
   static final GlobalKey<NavigatorState> _rootHome = GlobalKey<NavigatorState>(debugLabel: 'shellHome');
   static final GlobalKey<NavigatorState> _rootUser = GlobalKey<NavigatorState>(debugLabel: 'shellUser');
-
+  
   static final GoRouter router = GoRouter(
     initialLocation: _homeRoute,
     navigatorKey: _rootKey,
@@ -71,14 +71,14 @@ class AppRoutes {
                         path: _signInRoute,
                         name: signInView,
                         parentNavigatorKey: _rootKey,
-                        builder: (context, state) => const User(widget: SignInView(), sign: true),
+                        builder: (context, state) => const User(widget: SignInView()),
                         routes: [],
                       ),
                       GoRoute(
                         path: _signUpRoutes,
                         name: signUpView,
                         parentNavigatorKey: _rootKey,
-                        builder: (context, state) => const User(widget: SignUpView(), sign: true),
+                        builder: (context, state) => const User(widget: SignUpView()),
                         routes: [],
                       ),
                       /*GoRoute(
